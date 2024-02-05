@@ -1,0 +1,81 @@
+# Processing Actions Playground 
+
+_Processing Actions_ is a playground for practicing software design skills, both alone and with peers. 
+
+What are the issues with the current design? How can the design be improved to cater for changes and extensions to the system? 
+
+Ideas for redesign can be tried out and evaluated by refactoring the provided codebase to new structures. 
+
+## The System
+The repository offers a Java implementation of the central part of an imaginary system for putting a collection of data carrying items through a number of processing steps called _actions_. The total number of items is subdivided into smaller chunks called _batches_. 
+
+Actions are stringed together to process batches of items in a particular order, much like an assembly line. Each action is able to process a batch of items at a time. For each action, the processing involves passing relevant item data to an external HTTP service.
+
+```mermaid
+---
+title: The System
+---
+flowchart LR;
+    subgraph Input
+      I1[(Items)]
+    end
+    subgraph Actions
+      direction LR
+      I1-- batch -->A1
+      A1[Action 1]-- batch -->A2;
+      A2[Action 2]-- batch -->A3;
+      A3[Action 3]-- batch -->A4[Action 4];
+    end
+    A1-.->|item data|S1
+    A2-.->|item data|S2
+    A3-.->|item data|S3
+    A4-.->|item data|S4
+    subgraph HTTP Services
+      direction TB
+      S1{{Service 1}}
+      S2{{Service 2}}
+      S3{{Service 3}}
+      S4{{Service 4}}
+    end
+```
+
+Both the actions and the imaginary HTTP services offer some variation.
+
+Actions can implement conditional rules for selecting which items to process. The current variation includes:
+* Always passing all items to the HTTP service (no conditions)
+* Passing only items that have not previously failed for any preceding action
+* Passing only items for which there is data of interest
+
+The HTTP services differ in how they are able to receive and handle items. The current variation includes:
+* Accepting a single item per request
+* Accepting a collection of items per request that will succeed or fail as a whole
+* Accepting a collection of items per request that can succeed or fail individually
+
+
+## Evolution
+
+There is number of ways in which the system can be required to change, including:
+* Actions
+  * Addition of new actions for additional processing steps towards new services
+  * Changes in conditions for whether items are applicable for processing in an action
+* Items
+  * Changes in how processing results are logged for later reporting, e.g. whether an item has been skipped due to issues in prior actions or due to not having relevant data for this action
+  * Addition of data per item
+  * Changes in how item data is represented 
+* HTTP services
+  * Change from accepting single item per request to a collection of items
+  * Change from handling a collection of items together to individual processing
+  * Change in request format and contents
+  * Change in response format and contents
+
+## Questions to discuss
+- Thoughts on the current design and code?
+  - What is unclear?
+  - What du you like about the current design?
+  - What code smells do you react to?
+  - Which parts are you itching to change?
+- What is the consequence of implementing each type of change listed above?
+  - Code duplication?
+  - Test duplication?
+  - Complexity?
+- How would you restructure the code to allow changes to be made easier and safer?

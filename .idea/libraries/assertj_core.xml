@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="assertj.core" type="repository">
+    <properties maven-id="org.assertj:assertj-core:LATEST" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy/1.14.11/byte-buddy-1.14.11.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy/1.14.11/byte-buddy-1.14.11-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy/1.14.11/byte-buddy-1.14.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
