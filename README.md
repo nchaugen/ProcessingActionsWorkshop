@@ -79,3 +79,54 @@ There is number of ways in which the system can be required to change, including
   - Test duplication?
   - Complexity?
 - How would you restructure the code to allow changes to be made easier and safer?
+
+
+## Making private clone of repo
+In order to attempt a redesign you want to create a private clone of the repo. This is documented [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository).
+
+1. Create a bare clone of the repo. (This is temporary and will be removed so just do it wherever.)
+```bash
+git clone --bare git@github.com:nchaugen/ProcessingActionsWorkshop.git
+```
+2. Create a new private repo on Github and give it a suiting name, eg. ProcessingActionsRedesign.
+
+3. Mirror-push your bare clone to your new private repo.
+> Replace <your_username> with your actual Github username, and <your_repo_name> with your private repository name in the url below.
+```bash
+cd ProcessingActionsWorkshop.git
+git push --mirror git@github.com:<your_username>/<your_repo_name>.git
+```
+
+4. Remove the temporary local repo you created in step 1.
+```bash
+cd ..
+rm -rf ProcessingActionsWorkshop.git
+```
+
+5. You can now clone your ProcessingActionsRedesign repo on your machine (in my case in the code folder).
+```bash
+cd ~/code
+git clone git@github.com:<your_username>/<your_repo_name>.git
+```
+
+6. If you want, add the original repo as remote to fetch (potential) future changes. Make sure you also disable push on the remote (as you are not allowed to push to it anyway).
+```bash
+git remote add upstream git@github.com:nchaugen/ProcessingActionsWorkshop.git
+git remote set-url --push upstream DISABLE
+```
+
+7. You can list all your remotes with `git remote -v`. You should see:
+```bash
+origin	git@github.com:<your_username>/<your_repo_name>.git (fetch)
+origin	git@github.com:<your_username>/<your_repo_name>.git (push)
+upstream	git@github.com:nchaugen/ProcessingActionsWorkshop.git (fetch)
+upstream	DISABLE (push)
+```
+When you push, do so on origin with `git push origin`.
+
+When you want to pull changes from upstream you can just fetch the remote and rebase on top of your work.
+```bash
+git fetch upstream
+git rebase upstream/master
+```
+And solve the conflicts if any
