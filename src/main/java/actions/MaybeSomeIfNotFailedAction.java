@@ -3,7 +3,7 @@ package actions;
 import data.ActionResult;
 import data.Batch;
 import data.BatchItem;
-import integration.BackendResult;
+import integration.HttpResponse;
 import integration.HttpClient;
 import integration.Json;
 
@@ -34,7 +34,7 @@ public class MaybeSomeIfNotFailedAction implements Action {
             .filter(MaybeSomeIfNotFailedAction::hasNoPriorErrors)
             .toList();
 
-        BackendResult result = putAll(applicableItems);
+        HttpResponse result = putAll(applicableItems);
         List<BatchItem> updatedItems = switch (result.status()) {
             case SUCCESS -> markSucceeded(applicableItems, result.successResponse());
             case FAILURE -> allFailed(applicableItems, result.failureResponse());
@@ -76,7 +76,7 @@ public class MaybeSomeIfNotFailedAction implements Action {
             .toList();
     }
 
-    private BackendResult putAll(List<BatchItem> items) {
+    private HttpResponse putAll(List<BatchItem> items) {
         return httpClient.put(endpoint, jsonRequest(items));
     }
 

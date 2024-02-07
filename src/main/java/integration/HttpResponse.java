@@ -1,27 +1,27 @@
 package integration;
 
-import static integration.BackendResult.Type.FAILURE;
-import static integration.BackendResult.Type.FATAL;
-import static integration.BackendResult.Type.SUCCESS;
+import static integration.HttpResponse.Type.FAILURE;
+import static integration.HttpResponse.Type.FATAL;
+import static integration.HttpResponse.Type.SUCCESS;
 
-public record BackendResult(Type status, Integer statusCode, Object response) {
+public record HttpResponse(Type status, Integer statusCode, Object response) {
 
     public enum Type {SUCCESS, FAILURE, FATAL}
 
-    public static BackendResult success(Integer statusCode, String responseBody) {
-        return new BackendResult(SUCCESS, statusCode, responseBody);
+    public static HttpResponse success(Integer statusCode, String responseBody) {
+        return new HttpResponse(SUCCESS, statusCode, responseBody);
     }
 
-    public static BackendResult success(Integer statusCode) {
+    public static HttpResponse success(Integer statusCode) {
         return success(statusCode, "");
     }
 
-    public static BackendResult failure(Integer statusCode, String responseBody) {
-        return new BackendResult(FAILURE, statusCode, responseBody);
+    public static HttpResponse failure(Integer statusCode, String responseBody) {
+        return new HttpResponse(FAILURE, statusCode, responseBody);
     }
 
-    public static BackendResult fatal(Exception exception) {
-        return new BackendResult(FATAL, null, exception);
+    public static HttpResponse fatal(Exception exception) {
+        return new HttpResponse(FATAL, null, exception);
     }
 
     public String successResponse() {

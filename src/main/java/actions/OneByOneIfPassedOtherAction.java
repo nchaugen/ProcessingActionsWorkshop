@@ -2,7 +2,7 @@ package actions;
 
 import data.Batch;
 import data.BatchItem;
-import integration.BackendResult;
+import integration.HttpResponse;
 import integration.HttpClient;
 import integration.Json;
 
@@ -54,7 +54,7 @@ public class OneByOneIfPassedOtherAction implements Action {
     }
 
     private BatchItem postItem(BatchItem item) {
-        BackendResult result = httpClient.post(endpoint, jsonRequest(item));
+        HttpResponse result = httpClient.post(endpoint, jsonRequest(item));
         return switch (result.status()) {
             case SUCCESS -> item.actionSucceeded(name);
             case FAILURE -> item.actionFailed(name, result.failureResponse());

@@ -7,7 +7,7 @@ import actions.OneByOneAction;
 import actions.OneByOneIfPassedOtherAction;
 import data.Batch;
 import data.BatchItem;
-import integration.BackendResult;
+import integration.HttpResponse;
 import integration.HttpClient;
 
 import java.net.URI;
@@ -45,19 +45,19 @@ public class Main {
 
     public static final HttpClient HAPPY_CLIENT = new HttpClient() {
         @Override
-        public BackendResult get(URI path) {
-            return BackendResult.success(200, "{}");
+        public HttpResponse get(URI path) {
+            return HttpResponse.success(200, "{}");
         }
 
         @Override
-        public BackendResult post(URI path, String body) {
-            return BackendResult.success(200, """
+        public HttpResponse post(URI path, String body) {
+            return HttpResponse.success(200, """
                 {"failed":{"002":"Invalid data"}}""");
         }
 
         @Override
-        public BackendResult put(URI path, String body) {
-            return BackendResult.success(200, """
+        public HttpResponse put(URI path, String body) {
+            return HttpResponse.success(200, """
                 {"succeeded":["002","003"],"failed":{"001":"Not found"}}""");
         }
     };

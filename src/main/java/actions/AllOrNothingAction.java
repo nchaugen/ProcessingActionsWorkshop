@@ -2,7 +2,7 @@ package actions;
 
 import data.Batch;
 import data.BatchItem;
-import integration.BackendResult;
+import integration.HttpResponse;
 import integration.HttpClient;
 import integration.Json;
 
@@ -23,7 +23,7 @@ public class AllOrNothingAction implements Action {
 
     @Override
     public Batch process(Batch batch) {
-        BackendResult result = postAll(batch.items());
+        HttpResponse result = postAll(batch.items());
         return switch (result.status()) {
             case SUCCESS -> allSucceeded(batch);
             case FAILURE -> allFailed(batch, result.failureResponse());
@@ -47,7 +47,7 @@ public class AllOrNothingAction implements Action {
         );
     }
 
-    private BackendResult postAll(List<BatchItem> items) {
+    private HttpResponse postAll(List<BatchItem> items) {
         return httpClient.post(endpoint, jsonRequest(items));
     }
 

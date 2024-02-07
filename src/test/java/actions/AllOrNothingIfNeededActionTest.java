@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 
-import static integration.BackendResult.failure;
-import static integration.BackendResult.success;
+import static integration.HttpResponse.failure;
+import static integration.HttpResponse.success;
 import static org.mockito.AdditionalMatchers.and;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.contains;

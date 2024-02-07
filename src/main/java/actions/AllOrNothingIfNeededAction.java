@@ -2,7 +2,7 @@ package actions;
 
 import data.Batch;
 import data.BatchItem;
-import integration.BackendResult;
+import integration.HttpResponse;
 import integration.HttpClient;
 import integration.Json;
 
@@ -32,7 +32,7 @@ public class AllOrNothingIfNeededAction implements Action {
             .filter(this::hasData)
             .toList();
 
-        BackendResult result = postAll(applicableItems);
+        HttpResponse result = postAll(applicableItems);
         List<BatchItem> updatedItems = switch (result.status()) {
             case SUCCESS -> allSucceeded(applicableItems);
             case FAILURE -> allFailed(applicableItems, result.failureResponse());
@@ -62,7 +62,7 @@ public class AllOrNothingIfNeededAction implements Action {
             .toList();
     }
 
-    private BackendResult postAll(List<BatchItem> items) {
+    private HttpResponse postAll(List<BatchItem> items) {
         return httpClient.post(endpoint, jsonRequest(items));
     }
 

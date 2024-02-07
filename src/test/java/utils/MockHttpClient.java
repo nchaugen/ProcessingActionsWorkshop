@@ -2,7 +2,7 @@ package utils;
 
 import integration.HttpClient;
 
-import static integration.BackendResult.fatal;
+import static integration.HttpResponse.fatal;
 import static org.mockito.Mockito.mock;
 
 public class MockHttpClient {
